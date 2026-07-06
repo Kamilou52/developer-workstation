@@ -1,0 +1,9 @@
+alias gs='git status'
+alias gb='git branch -vv'
+alias gl='git log --graph --oneline --decorate --all -10'
+alias gp='git pull --rebase'
+alias gps='git push'
+alias ga='git add .'
+alias gc='git commit'
+alias gremote='git remote -v'
+alias gcheck="$HOME/developer-workstation/scripts/gcheck.sh"
