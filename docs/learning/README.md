@@ -183,6 +183,30 @@ Building by documenting.
 Documenting by improving.
 
 ---
+## Scripts
 
+- [x] bootstrap.sh
+- [x] update-dev.sh
+- [x] backup-config.sh
+- [x] restore-config.sh
+- [ ] doctor.sh
+- [ ] new-project.sh
+
+## Scripts
+
+- [x] bootstrap.sh
+- [x] update-dev.sh
+- [x] backup-config.sh
+- [x] restore-config.sh
+- [x] doctor.sh
+- [x] new-project.sh
+
+### Next scripts
+
+- [ ] install-dev-tools.sh
+- [ ] gitdoctor.sh
+- [ ] vscode-bootstrap.sh
+- [ ] docker-bootstrap.sh
+- [ ] update-all.sh
 Last update: July 2026
 
