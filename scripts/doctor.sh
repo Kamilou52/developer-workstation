@@ -2,6 +2,60 @@
 
 set -euo pipefail
 
+print_title() {
+    echo
+    echo "========================================="
+    echo "$1"
+    echo "========================================="
+}
+
+print_info() {
+    echo "[INFO] $1"
+}
+
+print_ok() {
+    echo "[ OK ] $1"
+}
+
+print_warn() {
+    echo "[WARN] $1"
+}
+
+if command -v git >/dev/null 2>&1
+then
+    print_ok "Git installed"
+    git --version
+else
+    print_warn "Git not installed"
+fi
+
+if command -v node >/dev/null 2>&1
+then
+    print_ok "Node.js installed"
+    node --version
+else
+    print_warn "Node.js missing"
+fi
+
+if command -v npm >/dev/null 2>&1
+then
+    print_ok "npm installed"
+    npm --version
+else
+    print_warn "npm missing"
+fi
+
+if command -v gh >/dev/null 2>&1
+then
+    print_ok "GitHub CLI installed"
+    gh --version | head -1
+else
+    print_warn "GitHub CLI missing"
+fi
+
+print_title "SSH"
+
+ssh -T git@github.com
 echo "========================================="
 echo "Developer Workstation Doctor"
 echo "========================================="
