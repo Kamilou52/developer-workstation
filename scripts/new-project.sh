@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 source "$(dirname "$0")/lib/output.sh"
 
 print_title "New Project Generator"
@@ -38,16 +40,18 @@ create_structure() {
 
 create_files() {
 
-    touch README.md
-    touch CHANGELOG.md
-    touch LICENSE
-    touch .gitignore
+    cp "$SCRIPT_DIR/../templates/README.md.template" README.md
 
-    echo "# $PROJECT_NAME" > README.md
+    cp "$SCRIPT_DIR/../templates/gitignore/default.gitignore" .gitignore
+
+    touch CHANGELOG.md
+
+    touch LICENSE
 
     print_ok "Project files created"
 
 }
+
 
 initialize_git() {
 
