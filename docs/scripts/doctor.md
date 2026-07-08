@@ -125,3 +125,16 @@ Version: 2.0
 
 State: Stable
 
+## Internal Architecture
+
+`doctor.sh` no longer contains all its functions.
+
+Reusable functions are imported from:
+
+* `scripts/lib/output.sh`
+* `scripts/lib/checks.sh`
+
+This makes the script smaller, easier to read and easier to maintain.
+
+Future diagnostic modules will also be imported from `scripts/lib`.
+
