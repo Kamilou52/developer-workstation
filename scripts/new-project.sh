@@ -2,30 +2,85 @@
 
 set -euo pipefail
 
-echo "========================================="
-echo "New Project Generator"
-echo "========================================="
+source "$(dirname "$0")/lib/output.sh"
 
-read -rp "Project name: " PROJECT
+print_title "New Project Generator"
 
-mkdir -p "$PROJECT"
+ask_project_name() {
 
-cd "$PROJECT"
+    read -rp "Project name: " PROJECT_NAME
 
-mkdir docs
-mkdir src
-mkdir tests
+}
 
-touch README.md
-touch CHANGELOG.md
-touch LICENSE
-touch .gitignore
+create_project() {
 
-git init
+    mkdir -p "$PROJECT_NAME"
 
-echo "# $PROJECT" > README.md
+    cd "$PROJECT_NAME"
 
-echo
-echo "Project created successfully."
+    print_ok "Project directory created"
 
-pwd
+}
+
+create_structure() {
+
+    mkdir docs
+
+    mkdir src
+
+    mkdir tests
+
+    mkdir -p .github/workflows
+
+    print_ok "Project structure created"
+
+}
+
+create_files() {
+
+    touch README.md
+    touch CHANGELOG.md
+    touch LICENSE
+    touch .gitignore
+
+    echo "# $PROJECT_NAME" > README.md
+
+    print_ok "Project files created"
+
+}
+
+initialize_git() {
+
+    git init
+
+    git branch -M main
+
+    git add .
+
+    git commit -m "Initial project structure"
+
+    print_ok "Git initialized"
+
+}
+
+main() {
+
+    print_title "New Project Generator"
+
+    ask_project_name
+
+    create_project
+
+    create_structure
+
+    create_files
+
+    initialize_git
+
+    print_ok "Project successfully created"
+
+    pwd
+
+}
+
+main
