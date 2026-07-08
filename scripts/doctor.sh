@@ -10,6 +10,7 @@ source "$(dirname "$0")/lib/output.sh"
 source "$(dirname "$0")/lib/checks.sh"
 source "$(dirname "$0")/lib/git.sh"
 source "$(dirname "$0")/lib/github.sh"
+source "$(dirname "$0")/lib/logger.sh"
 
 ########################################
 # Main program
@@ -18,6 +19,7 @@ source "$(dirname "$0")/lib/github.sh"
 #################################################
 # Git diagnostics
 #################################################
+log_info "Doctor started"
 
 check_repository
 check_current_branch
@@ -26,6 +28,8 @@ check_upstream
 check_working_tree
 check_last_commit
 check_github_auth
+
+log_info "Doctor finished"
 
 #################################################
 # Installed software
