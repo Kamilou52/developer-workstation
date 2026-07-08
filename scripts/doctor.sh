@@ -2,15 +2,38 @@
 
 set -euo pipefail
 
+########################################
+# Load shared libraries
+########################################
+
 source "$(dirname "$0")/lib/output.sh"
 source "$(dirname "$0")/lib/checks.sh"
+source "$(dirname "$0")/lib/git.sh"
+source "$(dirname "$0")/lib/github.sh"
+
+########################################
+# Main program
+########################################
+
+#################################################
+# Git diagnostics
+#################################################
+
+check_repository
+check_current_branch
+check_remote
+check_upstream
+check_working_tree
+check_last_commit
+check_github_auth
+
+#################################################
+# Installed software
+#################################################
 
 check_command git "Git"
-
 check_command node "Node.js"
-
 check_command npm "npm"
-
 check_command gh "GitHub CLI"
 
 print_title "SSH"
