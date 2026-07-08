@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+print_title() {
+    echo
+    echo "========================================="
+    echo "$1"
+    echo "========================================="
+}
+
+print_info() {
+    echo "[INFO] $1"
+}
+
+print_ok() {
+    echo "[ OK ] $1"
+}
+
+print_warn() {
+    echo "[WARN] $1"
+}
+
+check_command() {
+    local cmd="$1"
+    local label="$2"
+
+    print_title "$label"
+
+    if command -v "$cmd" >/dev/null 2>&1
+    then
+        print_ok "$label installed"
+        "$cmd" --version | head -1
+    else
+        print_warn "$label not installed"
+    fi
+}
+
+check_command git "Git"
+
+check_command node "Node.js"
+
+check_command npm "npm"
+
+check_command gh "GitHub CLI"
+
+print_title "SSH"
+
+ssh -T git@github.com
+
+echo "========================================="
+echo "Developer Workstation Doctor"
+echo "========================================="
+
+echo
+echo "User:"
+whoami
+
+echo
+echo "Current directory:"
+pwd
+
+echo
+echo "Operating System:"
+uname -a
+
+echo
+echo "Git:"
+git --version
+
+echo
+echo "GitHub CLI:"
+gh --version
+
+echo
+echo "Node:"
+node --version
+
+echo
+echo "npm:"
+npm --version
+
+echo
+echo "VS Code:"
+code --version | head -1
+
+echo
+echo "SSH:"
+ssh -V
+
+echo
+echo "Git Status"
+
+if git rev-parse --is-inside-work-tree >/dev/null 2>&1
+then
+    git status
+else
+    echo "Not inside a Git repository."
+fi
+
+echo
+echo "========================================="
+echo "Diagnostics completed."
