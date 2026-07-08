@@ -208,5 +208,17 @@ Documenting by improving.
 - [ ] vscode-bootstrap.sh
 - [ ] docker-bootstrap.sh
 - [ ] update-all.sh
+
+## Available Scripts
+
+| Script            | Status | Description                                  |
+| ----------------- | :----: | -------------------------------------------- |
+| bootstrap.sh      |    ✅   | Initial workstation setup                    |
+| update-dev.sh     |    ✅   | Updates Ubuntu packages                      |
+| backup-config.sh  |    ✅   | Creates timestamped configuration backups    |
+| restore-config.sh |    ✅   | Restores a previous configuration backup     |
+| doctor.sh         |    ✅   | Performs a complete workstation health check |
+| new-project.sh    |    ✅   | Generates a new project structure            |
+
 Last update: July 2026
 

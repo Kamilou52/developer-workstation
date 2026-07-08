@@ -36,3 +36,38 @@ Each script should have:
 * Expected output
 * Future improvements
 
+## Project Architecture
+
+The project is organized into reusable modules.
+
+```
+developer-workstation/
+├── backups/
+├── config/
+├── docs/
+├── scripts/
+│   ├── backup-config.sh
+│   ├── bootstrap.sh
+│   ├── doctor.sh
+│   ├── new-project.sh
+│   ├── restore-config.sh
+│   ├── update-dev.sh
+│   └── lib/
+│       ├── checks.sh
+│       └── output.sh
+├── templates/
+└── tests/
+```
+
+### Library (`scripts/lib`)
+
+The `scripts/lib` directory contains reusable Bash functions shared by multiple scripts.
+
+Current modules:
+
+* `output.sh` – display and formatting functions.
+* `checks.sh` – generic validation and diagnostic functions.
+
+This organization avoids code duplication and follows the DRY (Don't Repeat Yourself) principle.
+
+
