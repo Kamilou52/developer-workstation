@@ -31,8 +31,7 @@ print_info "Libraries : $LIB_COUNT"
 update_version_section
 update_scripts_section
 update_libraries_section
-get_metadata
+
 
 print_ok "Analysis completed"
 
-echo "$(get_script_description "$PROJECT_ROOT/scripts/doctor.sh")"
