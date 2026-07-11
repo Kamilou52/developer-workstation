@@ -55,16 +55,34 @@ Le projet rassemble des scripts Bash, des modèles de projets, de la documentati
 ---
 
 ## Scripts disponibles
+---
 
-<!-- BEGIN AUTO SCRIPTS -->
-Liste en attente de génération.
-<!-- END AUTO SCRIPTS -->
+<!-- BEGIN AUTO_SCRIPTS -->
+- backup-config.sh
+- bootstrap.sh
+- doctor.sh
+- doctor.sh.bak
+- new-project.sh
+- restore-config.sh
+- update-dev.sh
+- update-readme.sh
+<!-- END AUTO_SCRIPTS -->
+
+---
 
 ## Bibliothèques Bash
+---
 
-<!-- BEGIN AUTO LIBRARIES -->
-Liste en attente de génération.
-<!-- END AUTO LIBRARIES -->
+<!-- BEGIN AUTO_LIBRARIES -->
+- checks.sh
+- github.sh
+- git.sh
+- logger.sh
+- output.sh
+- readme.sh
+<!-- END AUTO_LIBRARIES -->
+
+---
 
 # Templates
 
@@ -124,13 +142,16 @@ Exemples :
 ./scripts/new-project.sh
 ```
 
----
 
 # Version
 
-<!-- BEGIN AUTO VERSION -->
-Version en attente de génération.
-<!-- END AUTO VERSION -->
+---
+
+<!-- BEGIN AUTO_VERSION -->
+Version actuelle : **1.3.0**
+<!-- END AUTO_VERSION -->
+
+---
 
 # Roadmap
 

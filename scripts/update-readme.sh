@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# @name: update-readme.sh
+# @description: Generate automatically README updates.
+# @version: 1.3.0
+
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -24,4 +28,11 @@ print_info "Scripts : $SCRIPT_COUNT"
 
 print_info "Libraries : $LIB_COUNT"
 
+update_version_section
+update_scripts_section
+update_libraries_section
+get_metadata
+
 print_ok "Analysis completed"
+
+echo "$(get_script_description "$PROJECT_ROOT/scripts/doctor.sh")"

@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# @name: output.sh
+# @description: Fonctions d'affichage formaté.
+# @version: 1.3.0
+
 # Shared output functions
 
 print_title() {

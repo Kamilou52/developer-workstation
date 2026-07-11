@@ -4,7 +4,7 @@
 
 check_command() {
     local cmd="$1"
-    local label="$2"
+    local label="${2:-$1}"
 
     print_title "$label"
 

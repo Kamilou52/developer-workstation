@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# @name: bootstrap.sh
+# @description: Initialise un poste de travail.
+# @version: 1.3.0
+
 ####################################################
 # Developer Workstation Bootstrap
 # Version : 0.1

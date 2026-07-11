@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# @name: doctor.sh
+# @description: Vérifie l'environnement de développement.
+# @version: 1.3.0
+
 set -euo pipefail
 
 ########################################
