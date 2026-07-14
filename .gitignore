@@ -1,0 +1,9 @@
+# Temporary development scripts
+tests/dev/
+
+# Scratch workspace
+scratch/
+
+# Temporary development files
+tests/dev/*
+!tests/dev/.gitkeep
