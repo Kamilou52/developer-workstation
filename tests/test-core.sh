@@ -23,3 +23,21 @@ echo
 echo "The scipts dir :"
 
 get_scripts_dir
+
+echo "========================================="
+echo "Test libraries scripts dir"
+echo "========================================="
+echo
+
+echo "The libraries scipts dir :"
+
+get_lib_dir
+
+echo "========================================="
+echo "Test Tests dir"
+echo "========================================="
+echo
+
+echo "The tests dir :"
+
+

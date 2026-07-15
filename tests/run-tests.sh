@@ -34,6 +34,12 @@ echo "Running test-git.sh..."
 
 echo
 
+echo "Running dev-test.sh..."
+
+"$PROJECT_ROOT/tests/dev/dev-test.sh"
+
+echo
+
 echo "========================================="
 echo "All tests completed successfully."
 echo "========================================="

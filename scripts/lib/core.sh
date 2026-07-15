@@ -32,3 +32,23 @@ get_scripts_dir() {
   printf '%s/scripts\n' "$(get_project_root)"
 
 }
+
+get_lib_dir() {
+
+    local script_dir
+
+    script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"	
+
+    printf '%s/scripts/lib\n' "$(get_project_root)"
+
+}
+
+get_tests_dir() {
+
+    local script_dir
+
+    script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+
+    printf '%s/tests\n' "$(get_project_root)"
+
+}
