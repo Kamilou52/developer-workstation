@@ -28,11 +28,11 @@ create_project() {
 
 create_structure() {
 
-    mkdir docs
+    create_directory "$PROJECT_NAME/docs"
 
-    mkdir src
+    create_directory "$PROJECT_NAME/src"
 
-    mkdir tests
+    create_directory "$PROJECT_NAME/tests"
 
     mkdir -p .github/workflows
 
