@@ -5,7 +5,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
-source "$(dirname "$0")/lib/output.sh"
+source "$PROJECT_ROOT/scripts/lib/output.sh"
 source "$PROJECT_ROOT/scripts/lib/filesystem.sh"
 
 print_title "New Project Generator"
@@ -20,7 +20,6 @@ create_project() {
 
     create_directory "$PROJECT_NAME"
 
-    cd "$PROJECT_NAME"
 
     print_ok "Project directory created"
 
@@ -42,13 +41,10 @@ create_structure() {
 
 create_files() {
 
-    cp "$SCRIPT_DIR/../templates/README.md.template" README.md
-
-    cp "$SCRIPT_DIR/../templates/gitignore/default.gitignore" .gitignore
-
-    touch CHANGELOG.md
-
-    touch LICENSE
+    create_file "$PROJECT_NAME/README.md"
+    create_file "$PROJECT_NAME/CHANGELOG.md"
+    create_file "$PROJECT_NAME/LICENSE"
+    create_file "$PROJECT_NAME/.gitignore"
 
     print_ok "Project files created"
 
@@ -57,15 +53,10 @@ create_files() {
 
 initialize_git() {
 
-    git init
-
-    git branch -M main
-
-    git add .
-
-    git commit -m "Initial project structure"
-
-    print_ok "Git initialized"
+    git -C "$PROJECT_NAME" init
+    git -C "$PROJECT_NAME" branch -M main
+    git -C "$PROJECT_NAME" add .
+    git -C "$PROJECT_NAME" commit -m "Initial project structure"
 
 }
 
