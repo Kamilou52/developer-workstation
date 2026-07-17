@@ -3,8 +3,10 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 source "$(dirname "$0")/lib/output.sh"
+source "$PROJECT_ROOT/scripts/lib/filesystem.sh"
 
 print_title "New Project Generator"
 
@@ -16,7 +18,7 @@ ask_project_name() {
 
 create_project() {
 
-    mkdir -p "$PROJECT_NAME"
+    create_directory "$PROJECT_NAME"
 
     cd "$PROJECT_NAME"
 
