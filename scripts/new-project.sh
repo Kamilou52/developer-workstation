@@ -33,7 +33,7 @@ create_structure() {
 
     create_directory "$PROJECT_NAME/tests"
 
-    mkdir -p .github/workflows
+    create_directory "$PROJECT_NAME/.github/workflows"
 
     print_ok "Project structure created"
 
