@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-# Git helper functions
+# @name: git.sh
+# @description: Fonctions utilitaires pour la gestion des dépôts Git.
+# @version: 1.0.0
 
 check_repository() {
 
@@ -77,5 +79,30 @@ check_upstream() {
 
 }
 
+# --------------------------------------------------
+# initialize_repository
+#
+# Initializes a new Git repository.
+#
+# Parameters:
+#   $1 : project directory
+# --------------------------------------------------
 
+initialize_repository() {
 
+    local project_dir="$1"
+
+    print_title "Git initialization"
+
+    git -C "$project_dir" init
+
+    git -C "$project_dir" branch -M main
+
+    git -C "$project_dir" add .
+
+    git -C "$project_dir" commit \
+        -m "Initial project structure"
+
+    print_ok "Repository initialized"
+
+}

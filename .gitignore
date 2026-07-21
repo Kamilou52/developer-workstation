@@ -7,3 +7,4 @@ scratch/
 # Temporary development files
 tests/dev/*
 !tests/dev/.gitkeep
+sandbox/

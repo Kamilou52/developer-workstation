@@ -4,42 +4,42 @@ set -euo pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-echo
-echo "========================================="
-echo "Developer Workstation Test Suite"
-echo "========================================="
-echo
+source "$PROJECT_ROOT/scripts/lib/output.sh"
+source "$PROJECT_ROOT/scripts/lib/tests.sh"
 
-echo "Running test-readme.sh..."
+print_title "Developer Workstation Test Suite"
 
-"$PROJECT_ROOT/tests/test-readme.sh"
+reset_test_counters
 
-echo
+while IFS= read -r test
+do
+    increment_total
 
-echo "Running test-output.sh..."
+    echo
+    echo "Running $(basename "$test")..."
 
-"$PROJECT_ROOT/tests/test-output.sh"
+    if bash "$test"
+    then
+        increment_passed
+    else
+        increment_failed
+    fi
 
-echo
-
-echo "Running test-checks.sh..."
-
-"$PROJECT_ROOT/tests/test-checks.sh"
-
-echo
-
-echo "Running test-git.sh..."
-
-"$PROJECT_ROOT/tests/test-git.sh"
+done < <(discover_tests)
 
 echo
 
-echo "Running dev-test.sh..."
-
-"$PROJECT_ROOT/tests/dev/dev-test.sh"
+print_info "Total tests : $(get_test_count)"
+print_info "Passed      : $(get_passed_count)"
+print_info "Failed      : $(get_failed_count)"
 
 echo
 
-echo "========================================="
-echo "All tests completed successfully."
-echo "========================================="
+if [ "$(get_failed_count)" -eq 0 ]
+then
+    print_ok "All tests passed."
+    exit 0
+else
+    print_error "Some tests failed."
+    exit 1
+fi

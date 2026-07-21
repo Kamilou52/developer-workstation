@@ -4,27 +4,54 @@
 # @description: Fonctions communes pour l'exécution des tests.
 # @version: 1.0.0
 
-TOTAL=0
-PASSED=0
-FAILED=0
+TEST_PASSED=0
+TEST_FAILED=0
+
+get_test_count() {
+
+    printf '%s\n' "$TEST_TOTAL"
+
+}
+
+get_passed_count() {
+
+    printf '%s\n' "$TEST_PASSED"
+
+}
+
+get_failed_count() {
+
+    printf '%s\n' "$TEST_FAILED"
+
+}
+
+TEST_TOTAL=0
+TEST_PASSED=0
+TEST_FAILED=0
 
 reset_test_counters() {
 
-    TOTAL=0
-    PASSED=0
-    FAILED=0
+    TEST_TOTAL=0
+    TEST_PASSED=0
+    TEST_FAILED=0
 
 }
 
 increment_total() {
 
-    ((++TOTAL))
+    ((++TEST_TOTAL))
 
 }
 
 increment_passed() {
 
-    ((++PASSED))
+    ((++TEST_PASSED))
+
+}
+
+increment_failed() {
+
+    ((++TEST_FAILED))
 
 }
 
