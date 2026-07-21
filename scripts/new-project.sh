@@ -57,11 +57,21 @@ create_files() {
 
 }
 
+parse_arguments() {
+
+    OUTPUT_DIR="sandbox/projects"
+
+}
+
 main() {
+
+    parse_arguments "$@"
+
+    print_title "New Project Generator"	
 
     ask_project_name
 
-    PROJECT_NAME="$OUTPUT_DIR/$PROJECT_DIR"
+    PROJECT_DIR="$OUTPUT_DIR/$PROJECT_NAME"
 
     create_project
 
