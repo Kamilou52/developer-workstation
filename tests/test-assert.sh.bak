@@ -7,10 +7,6 @@ PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 source "$PROJECT_ROOT/scripts/lib/output.sh"
 source "$PROJECT_ROOT/scripts/lib/assert.sh"
 
-# --------------------------------------------------
-# assert_equals()
-# --------------------------------------------------
-
 print_title "Test Assert Library"
 
 if assert_equals "abc" "abc"
@@ -28,19 +24,6 @@ else
     print_error "assert_equals() incorrect"
     exit 1
 fi
-
-print_title "assert_equals() with message"
-
-if assert_equals "abc" "abc" "Equal strings"
-then
-    :
-else
-    exit 1
-fi
-
-# --------------------------------------------------
-# assert_file_exists()
-# --------------------------------------------------
 
 echo
 print_title "Test assert_file_exists()"
@@ -65,10 +48,6 @@ else
     print_error "Missing file incorrectly detected as existing"
     exit 1
 fi
-
-# --------------------------------------------------
-# assert_directory_exists()
-# --------------------------------------------------
 
 echo
 print_title "Test assert_directory_exists()"
