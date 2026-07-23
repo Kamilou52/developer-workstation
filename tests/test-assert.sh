@@ -93,3 +93,22 @@ else
     print_error "Missing directory incorrectly detected as existing"
     exit 1
 fi
+
+# --------------------------------------------------
+# assert_contains()
+# --------------------------------------------------
+
+print_title "Test assert_contains()"
+
+assert_contains \
+    "Developer" \
+    "Developer Workstation" \
+    "Developer found"
+
+if ! assert_contains \
+    "Linux" \
+    "Developer Workstation" \
+    "Linux not found"
+then
+    print_ok "Negative test passed"
+fi
