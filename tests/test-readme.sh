@@ -4,20 +4,35 @@ set -euo pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
+source "$PROJECT_ROOT/scripts/lib/test-framework.sh"
+source "$PROJECT_ROOT/scripts/lib/output.sh"
+source "$PROJECT_ROOT/scripts/lib/tests.sh"
+source "$PROJECT_ROOT/scripts/lib/assert.sh"
 source "$PROJECT_ROOT/scripts/lib/readme.sh"
 
-echo "========================================="
-echo "Test README Library"
-echo "========================================="
-echo
+DESCRIPTION=$(get_metadata \
+    "$PROJECT_ROOT/scripts/doctor.sh" \
+    description)
 
-echo "Test 1 : description de doctor.sh"
-get_metadata "$PROJECT_ROOT/scripts/doctor.sh" description
+assert_equals \
+    "Vérifie l'environnement de développement." \
+    "$DESCRIPTION" \
+    "doctor.sh description"
 
-echo
-echo "Test 2 : nom de doctor.sh"
-get_metadata "$PROJECT_ROOT/scripts/doctor.sh" name
+NAME=$(get_metadata \
+    "$PROJECT_ROOT/scripts/doctor.sh" \
+    name)
 
-echo
-echo "Test 3 : version de doctor.sh"
-get_metadata "$PROJECT_ROOT/scripts/doctor.sh" version
+assert_equals \
+    "doctor.sh" \
+    "$NAME" \
+    "doctor.sh name"
+
+VERSION=$(get_metadata \
+    "$PROJECT_ROOT/scripts/doctor.sh" \
+    version)
+
+assert_equals \
+    "1.3.0" \
+    "$VERSION" \
+    "doctor.sh version"

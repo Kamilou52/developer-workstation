@@ -79,6 +79,31 @@ check_upstream() {
 
 }
 
+get_current_branch() {
+
+    git branch --show-current
+
+}
+
+get_remote_name() {
+
+    git remote | head -n 1
+
+}
+
+get_last_commit() {
+
+    git log -1 --pretty=format:"%h - %s"
+
+}
+
+is_working_tree_clean() {
+
+    git diff --quiet &&
+    git diff --cached --quiet
+
+}
+
 # --------------------------------------------------
 # initialize_repository
 #

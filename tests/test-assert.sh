@@ -4,12 +4,16 @@ set -euo pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
+source "$PROJECT_ROOT/scripts/lib/test-framework.sh"
 source "$PROJECT_ROOT/scripts/lib/output.sh"
+source "$PROJECT_ROOT/scripts/lib/tests.sh"
 source "$PROJECT_ROOT/scripts/lib/assert.sh"
 
 # --------------------------------------------------
 # assert_equals()
 # --------------------------------------------------
+
+reset_test_counters
 
 print_title "Test Assert Library"
 
@@ -47,13 +51,12 @@ print_title "Test assert_file_exists()"
 
 echo "Test 1 : fichier existant"
 
-if assert_file_exists "$PROJECT_ROOT/scripts/new-project.sh"
-then
-    print_ok "scripts/new-project.sh found"
-else
-    print_error "scripts/new-project.sh not found"
+assert_file_exists \
+    "$PROJECT_ROOT/scripts/new-project.sh" \
+    "scripts/new-project.sh found" \
+    "scripts/new-project.sh not found"
     exit 1
-fi
+
 
 echo
 echo "Test 2 : fichier inexistant"
@@ -112,3 +115,37 @@ if ! assert_contains \
 then
     print_ok "Negative test passed"
 fi
+
+# --------------------------------------------------
+# assert_file_contains()
+# --------------------------------------------------
+
+echo
+
+print_title "Test assert_file_contains()"
+
+echo "Test 1 : README contains project title"
+
+assert_file_contains \
+    "$PROJECT_ROOT/README.md" \
+    "Developer Workstation" \
+    "README contains project title"
+
+echo
+
+echo "Test 2 : README contains nonexistent string"
+
+if ! assert_file_contains \
+    "$PROJECT_ROOT/README.md" \
+    "This string does not exist" \
+    "README missing string"
+then
+    print_ok "Negative test passed"
+else
+    exit 1
+fi
+
+echo
+print_info "Assertions : $(get_test_count)"
+print_info "Succeeded  : $(get_passed_count)"
+print_info "Failed     : $(get_failed_count)"

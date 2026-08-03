@@ -9,10 +9,14 @@ _assert_result() {
     local status="$1"
     local message="${2:-}"
 
+    increment_total
+
     if [ "$status" -eq 0 ]
     then
+        increment_passed
         [ -n "$message" ] && print_ok "$message"
     else
+        increment_failed
         [ -n "$message" ] && print_error "$message"
     fi
 
@@ -104,6 +108,36 @@ assert_contains() {
 
     echo "Expected : $expected"
     echo "Actual   : $actual"
+
+    return 1
+
+}
+
+assert_file_contains() {
+
+    local file="$1"
+    local expected="$2"
+    local message="${3:-}"
+
+    if [ ! -f "$file" ]
+    then
+        _assert_result 1 "$message"
+
+        echo "Missing file : $file"
+
+        return 1
+    fi
+
+    if grep -Fq "$expected" "$file"
+    then
+        _assert_result 0 "$message"
+        return 0
+    fi
+
+    _assert_result 1 "$message"
+
+    echo "Expected : $expected"
+    echo "File     : $file"
 
     return 1
 

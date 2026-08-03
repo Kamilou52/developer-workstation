@@ -4,6 +4,7 @@ set -euo pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
+source "$PROJECT_ROOT/scripts/lib/test-framework.sh"
 source "$PROJECT_ROOT/scripts/lib/output.sh"
 source "$PROJECT_ROOT/scripts/lib/tests.sh"
 
@@ -43,3 +44,7 @@ else
     print_error "Some tests failed."
     exit 1
 fi
+
+print_title "Discovered tests"
+
+discover_tests

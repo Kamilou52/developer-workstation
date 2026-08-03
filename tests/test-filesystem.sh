@@ -4,32 +4,26 @@ set -euo pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
+source "$PROJECT_ROOT/scripts/lib/test-framework.sh"
+source "$PROJECT_ROOT/scripts/lib/output.sh"
+source "$PROJECT_ROOT/scripts/lib/tests.sh"
+source "$PROJECT_ROOT/scripts/lib/assert.sh"
 source "$PROJECT_ROOT/scripts/lib/filesystem.sh"
 
-echo "========================================="
-echo "Test Filesystem Library"
-echo "========================================="
-echo
+print_title "Filesystem Library"
 
-echo "Répertoire scripts :"
+assert_directory_exists \
+    "$PROJECT_ROOT/scripts" \
+    "scripts directory exists"
 
-if directory_exists "$PROJECT_ROOT/scripts"
-then
-    echo "OK"
-else
-    echo "ERREUR"
-fi
+assert_directory_exists \
+    "$PROJECT_ROOT/tests" \
+    "tests directory exists"
 
-echo
+assert_file_exists \
+    "$PROJECT_ROOT/README.md" \
+    "README exists"
 
-echo "README.md :"
-
-if file_exists "$PROJECT_ROOT/README.md"
-then
-    echo "OK"
-else
-    echo "ERREUR"
-fi
-
-echo
-
+assert_file_exists \
+    "$PROJECT_ROOT/LICENSE" \
+    "LICENSE exists"

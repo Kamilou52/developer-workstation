@@ -4,6 +4,7 @@
 # @description: Fonctions communes pour l'exécution des tests.
 # @version: 1.0.0
 
+TEST_TOTAL=0
 TEST_PASSED=0
 TEST_FAILED=0
 
@@ -58,9 +59,9 @@ increment_failed() {
 discover_tests() {
 
     find "$PROJECT_ROOT/tests" \
-        -maxdepth 1 \
         -type f \
         -name "test-*.sh" \
+        ! -path "*/dev/*" \
         | sort
 
 }
