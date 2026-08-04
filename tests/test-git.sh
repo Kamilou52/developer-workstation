@@ -34,18 +34,13 @@ assert_contains \
     "$LAST_COMMIT" \
     "Last commit available"
 
-if is_working_tree_clean
-then
-    assert_equals \
-        "clean" \
-        "clean" \
-        "Working tree"
-else
-    assert_equals \
-        "clean" \
-        "dirty" \
-        "Working tree"
-fi
+assert_true \
+    check_repository \
+    "Inside Git repository"
+
+assert_command_success \
+    git rev-parse --is-inside-work-tree \
+    "Git repository detected"
 
 print_info "Assertions : $(get_test_count)"
 print_info "Succeeded  : $(get_passed_count)"

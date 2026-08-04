@@ -2,9 +2,6 @@
 
 #------------------------------------------------------------------------------
 # Assert Library
-# @name: assert.sh
-# @description: Assertions communes pour les tests.
-# @version: 2.1.0
 #
 # Toutes les assertions suivent la même convention.
 #
@@ -25,9 +22,9 @@
 #
 #------------------------------------------------------------------------------
 
-###############################################################################
-# Internal helpers
-###############################################################################
+# @Name: assert.sh
+# @Description: Assertions communes pour les tests.
+# @Version: 1.0.0
 
 _assert_result() {
 
@@ -49,58 +46,54 @@ _assert_result() {
 
 }
 
-#_assert_failure_details() {
-#
-#    while (( $# > 1 ))
-#    do
-#        printf '%-10s: %s\n' "$1" "$2"
-#        shift 2
-#    done
-#
-#}
+_assert_failure_details() {
 
-#assert_empty() {
-#
-#    local value="$1"
-#    local message="${2:-Value is empty}"
-#
-#    if [ -z "$value" ]
-#    then
-#        _assert_result 0 "$message"
-#        return 0
-#    fi
-#
-#    _assert_result 1 "$message"
-#
-#    _assert_failure_details \
-#        "Value" "$value"
-#
-#    return 1
-#
-#}
+    while (( $# > 1 ))
+    do
+        printf '%-10s: %s\n' "$1" "$2"
+        shift 2
+    done
 
-#assert_not_empty() {
-#
-#    local value="$1"
-#    local message="${2:-Value is not empty}"
-#
-#    if [ -n "$value" ]
-#    then
-#        _assert_result 0 "$message"
-#        return 0
-#    fi
-#
-#    _assert_result 1 "$message"
-#
-#    echo "Value is empty"
-#
-#    return 1
-#
-#}
+}
 
-###############################################################################
-# Value assertions
-###############################################################################
+assert_empty() {
+
+    local value="$1"
+    local message="${2:-Value is empty}"
+
+    if [ -z "$value" ]
+    then
+        _assert_result 0 "$message"
+        return 0
+    fi
+
+    _assert_result 1 "$message"
+
+    _assert_failure_details \
+        "Value" "$value"
+
+    return 1
+
+}
+
+assert_not_empty() {
+
+    local value="$1"
+    local message="${2:-Value is not empty}"
+
+    if [ -n "$value" ]
+    then
+        _assert_result 0 "$message"
+        return 0
+    fi
+
+    _assert_result 1 "$message"
+
+    echo "Value is empty"
+
+    return 1
+
+}
 
 assert_equals() {
 
@@ -123,44 +116,6 @@ assert_equals() {
     return 1
 
 }
-
-assert_true() {
-
-    local command="$1"
-    local message="${2:-Assertion}"
-
-    if "$command"
-    then
-        _assert_result 0 "$message"
-        return 0
-    fi
-
-    _assert_result 1 "$message"
-
-    return 1
-
-}
-
-assert_false() {
-
-    local command="$1"
-    local message="${2:-Assertion}"
-
-    if ! "$command"
-    then
-        _assert_result 0 "$message"
-        return 0
-    fi
-
-    _assert_result 1 "$message"
-
-    return 1
-
-}
-
-###############################################################################
-# Filesystem assertions
-###############################################################################
 
 assert_file_exists() {
 
@@ -200,22 +155,12 @@ assert_directory_exists() {
 
 }
 
-assert_file_contains() {
+assert_true() {
 
-    local file="$1"
-    local expected="$2"
-    local message="${3:-Assertion}"
+    local command="$1"
+    local message="${2:-Assertion}"
 
-    if [ ! -f "$file" ]
-    then
-        _assert_result 1 "$message"
-
-        echo "Missing file : $file"
-
-        return 1
-    fi
-
-    if grep -Fq "$expected" "$file"
+    if "$command"
     then
         _assert_result 0 "$message"
         return 0
@@ -223,16 +168,26 @@ assert_file_contains() {
 
     _assert_result 1 "$message"
 
-    echo "Expected : $expected"
-    echo "File     : $file"
-
     return 1
 
 }
 
-###############################################################################
-# Command assertions
-###############################################################################
+assert_false() {
+
+    local command="$1"
+    local message="${2:-Assertion}"
+
+    if ! "$command"
+    then
+        _assert_result 0 "$message"
+        return 0
+    fi
+
+    _assert_result 1 "$message"
+
+    return 1
+
+}
 
 assert_command_success() {
 
@@ -284,10 +239,6 @@ assert_command_failure() {
 
 }
 
-###############################################################################
-# Text assertions
-###############################################################################
-
 assert_contains() {
 
     local expected="$1"
@@ -309,3 +260,32 @@ assert_contains() {
 
 }
 
+assert_file_contains() {
+
+    local file="$1"
+    local expected="$2"
+    local message="${3:-Assertion}"
+
+    if [ ! -f "$file" ]
+    then
+        _assert_result 1 "$message"
+
+        echo "Missing file : $file"
+
+        return 1
+    fi
+
+    if grep -Fq "$expected" "$file"
+    then
+        _assert_result 0 "$message"
+        return 0
+    fi
+
+    _assert_result 1 "$message"
+
+    echo "Expected : $expected"
+    echo "File     : $file"
+
+    return 1
+
+}
