@@ -27,13 +27,11 @@ assert_equals \
 
 echo
 
-if ! assert_equals \
+expect_failure \
+    assert_equals \
     "abc" \
     "xyz" \
-    "Different strings"
-then
-    print_ok "assert_equals() detects difference"
-fi
+    "assert_equals() detects difference"
 
 ###############################################################################
 # assert_file_exists()
@@ -49,12 +47,10 @@ echo
 
 echo "Test 2 : fichier inexistant"
 
-if ! assert_file_exists \
+expect_failure \
+    assert_file_exists \
     "$PROJECT_ROOT/does-not-exist.txt" \
     "Missing file"
-then
-    print_ok "Missing file correctly detected"
-fi
 
 ###############################################################################
 # assert_directory_exists()
@@ -73,12 +69,11 @@ echo
 
 echo "Test 2 : répertoire inexistant"
 
-if ! assert_directory_exists \
+expect_failure \
+    assert_directory_exists \
     "$PROJECT_ROOT/scriptt" \
-    "Directory exists"
-then
-    print_ok "Missing directory correctly detected"
-fi
+    "Directory exists" \
+    "Missing directory correctly detected"
 
 ###############################################################################
 # assert_contains()
@@ -92,17 +87,22 @@ assert_contains \
     "Developer Workstation" \
     "Developer found"
 
-if ! assert_contains \
+echo
+
+echo "Test 2 : Assertion Contenu inexistant"
+
+expect_failure \
+    assert_contains \
     "Linux" \
     "Developer Workstation" \
     "Linux not found"
-then
-    print_ok "Negative test passed"
-fi
 
 ###############################################################################
 # assert_file_contains()
 ###############################################################################
+echo
+
+echo "Test 1 : Fichiers README existant"
 
 assert_file_contains \
     "$PROJECT_ROOT/README.md" \
@@ -113,13 +113,11 @@ echo
 
 echo "Test 2 : README contains nonexistent string"
 
-if ! assert_file_contains \
+expect_failure \
+    assert_file_contains \
     "$PROJECT_ROOT/README.md" \
     "This string does not exist" \
     "README missing string"
-then
-    print_ok "Negative test passed"
-fi
 
 ###############################################################################
 # Résumé

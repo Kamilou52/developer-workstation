@@ -29,6 +29,8 @@
 # Internal helpers
 ###############################################################################
 
+ASSERT_SILENT=0
+
 _assert_result() {
 
     local status="$1"
@@ -39,13 +41,35 @@ _assert_result() {
     if (( status == 0 ))
     then
         increment_passed
-        print_ok "$message"
+
+        if (( ASSERT_SILENT == 0 ))
+        then
+            print_ok "$message"
+        fi
+
     else
+
         increment_failed
-        print_error "$message"
+
+        if (( ASSERT_SILENT == 0 ))
+        then
+            print_error "$message"
+        fi
+
     fi
 
     return "$status"
+
+}
+
+_assert_failure_details() {
+
+    if (( ${ASSERT_SILENT:-0} != 0 ))
+    then
+        return 0
+    fi
+
+    printf '%s\n' "$@"
 
 }
 
@@ -117,8 +141,9 @@ assert_equals() {
 
     _assert_result 1 "$message"
 
-    echo "Expected : $expected"
-    echo "Actual   : $actual"
+    _assert_failure_details \
+    "Expected : $expected" \
+    "Actual   : $actual"
 
     return 1
 
@@ -175,7 +200,8 @@ assert_file_exists() {
 
     _assert_result 1 "$message"
 
-    echo "Missing file : $file"
+    _assert_failure_details \
+    "Missing file : $file"
 
     return 1
 
@@ -194,7 +220,8 @@ assert_directory_exists() {
 
     _assert_result 1 "$message"
 
-    echo "Missing directory : $directory"
+    _assert_failure_details \
+      "Missing directory : $directory"
 
     return 1
 
@@ -210,7 +237,8 @@ assert_file_contains() {
     then
         _assert_result 1 "$message"
 
-        echo "Missing file : $file"
+        _assert_failure_details \
+           "Missing file : $file"
 
         return 1
     fi
@@ -223,8 +251,9 @@ assert_file_contains() {
 
     _assert_result 1 "$message"
 
-    echo "Expected : $expected"
-    echo "File     : $file"
+    _assert_failure_details \
+    "Expected : $expected" \
+    "File     : $file"
 
     return 1
 
@@ -253,7 +282,8 @@ assert_command_success() {
 
     _assert_result 1 "$message"
 
-    echo "Command failed : $*"
+    _assert_failure_details \
+      "Command failed : $*"
 
     return 1
 
@@ -278,14 +308,72 @@ assert_command_failure() {
 
     _assert_result 1 "$message"
 
-    echo "Command unexpectedly succeeded : $*"
+    _assert_failure_details \
+    "Command unexpectedly succeeded : $*"
 
     return 1
 
 }
 
 ###############################################################################
-# Text assertions
+# Test helpers
+###############################################################################
+
+expect_failure() {
+
+    local previous_silent="${ASSERT_SILENT:-0}"
+    local status
+
+    ASSERT_SILENT=1
+
+    set +e
+    "$@"
+    status=$?
+    set -e
+
+    ASSERT_SILENT="$previous_silent"
+
+    if (( status != 0 ))
+    then
+        _assert_result 0 "Expected failure"
+        return 0
+    fi
+
+    _assert_result 1 "Expected failure"
+
+    _assert_result 1 "Expected failure"
+
+    echo "Command unexpectedly succeeded : $*"
+
+    return 1
+
+}
+
+# expect_failure() {
+#
+#    local message="${*: -1}"
+#
+#    if (( $# > 1 ))
+#    then
+#        set -- "${@:1:$(($#-1))}"
+#    else
+#        message="Expected failure"
+#    fi
+#
+#    if "$@"
+#    then
+#        _assert_result 1 "$message"
+#        echo "Command unexpectedly succeeded : $*"
+#        return 1
+#    fi
+#
+#    _assert_result 0 "$message"
+#    return 0
+#
+#}
+
+###############################################################################
+# Text assertions 
 ###############################################################################
 
 assert_contains() {
@@ -302,8 +390,9 @@ assert_contains() {
 
     _assert_result 1 "$message"
 
-    echo "Expected to find : $expected"
-    echo "In               : $actual"
+    _assert_failure_details \
+    "Expected : $expected" \
+    "Actual   : $actual"
 
     return 1
 
