@@ -31,6 +31,53 @@
 
 ASSERT_SILENT=0
 
+###############################################################################
+# Internal predicates
+###############################################################################
+
+_equals() {
+
+    local expected="$1"
+    local actual="$2"
+
+    [[ "$expected" == "$actual" ]]
+
+}
+
+_file_exists() {
+
+    local file="$1"
+
+    [[ -f "$file" ]]
+
+}
+
+_directory_exists() {
+
+    local directory="$1"
+
+    [[ -d "$directory" ]]
+
+}
+
+_contains() {
+
+    local expected="$1"
+    local actual="$2"
+
+    [[ "$actual" == *"$expected"* ]]
+
+}
+
+_file_contains() {
+
+    local file="$1"
+    local expected="$2"
+
+    [[ -f "$file" ]] && grep -Fq "$expected" "$file"
+
+}
+
 _assert_result() {
 
     local status="$1"
@@ -132,18 +179,17 @@ assert_equals() {
     local actual="$2"
     local message="${3:-Assertion}"
 
-    if [[ "$expected" == "$actual" ]]
+    if _equals "$expected" "$actual"
     then
-	    
-         _assert_result 0 "$message"
-         return 0
+        _assert_result 0 "$message"
+        return 0
     fi
 
     _assert_result 1 "$message"
 
     _assert_failure_details \
-    "Expected : $expected" \
-    "Actual   : $actual"
+        "Expected : $expected" \
+        "Actual   : $actual"
 
     return 1
 
@@ -192,7 +238,7 @@ assert_file_exists() {
     local file="$1"
     local message="${2:-File exists}"
 
-    if [ -f "$file" ]
+    if _file_exists "$file"
     then
         _assert_result 0 "$message"
         return 0
@@ -201,7 +247,7 @@ assert_file_exists() {
     _assert_result 1 "$message"
 
     _assert_failure_details \
-    "Missing file : $file"
+        "Missing file : $file"
 
     return 1
 
@@ -212,7 +258,7 @@ assert_directory_exists() {
     local directory="$1"
     local message="${2:-Directory exists}"
 
-    if [ -d "$directory" ]
+    if _directory_exists "$directory"
     then
         _assert_result 0 "$message"
         return 0
@@ -221,7 +267,29 @@ assert_directory_exists() {
     _assert_result 1 "$message"
 
     _assert_failure_details \
-      "Missing directory : $directory"
+        "Missing directory : $directory"
+
+    return 1
+
+}
+
+assert_contains() {
+
+    local expected="$1"
+    local actual="$2"
+    local message="${3:-Assertion}"
+
+    if _contains "$expected" "$actual"
+    then
+        _assert_result 0 "$message"
+        return 0
+    fi
+
+    _assert_result 1 "$message"
+
+    _assert_failure_details \
+        "Expected to find : $expected" \
+        "In               : $actual"
 
     return 1
 
@@ -233,17 +301,7 @@ assert_file_contains() {
     local expected="$2"
     local message="${3:-Assertion}"
 
-    if [ ! -f "$file" ]
-    then
-        _assert_result 1 "$message"
-
-        _assert_failure_details \
-           "Missing file : $file"
-
-        return 1
-    fi
-
-    if grep -Fq "$expected" "$file"
+    if _file_contains "$file" "$expected"
     then
         _assert_result 0 "$message"
         return 0
@@ -251,9 +309,15 @@ assert_file_contains() {
 
     _assert_result 1 "$message"
 
-    _assert_failure_details \
-    "Expected : $expected" \
-    "File     : $file"
+    if [[ ! -f "$file" ]]
+    then
+        _assert_failure_details \
+            "Missing file : $file"
+    else
+        _assert_failure_details \
+            "Expected : $expected" \
+            "File     : $file"
+    fi
 
     return 1
 
