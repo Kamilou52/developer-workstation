@@ -120,6 +120,52 @@ expect_failure \
     "README missing string"
 
 ###############################################################################
+# assert_true()
+###############################################################################
+
+echo
+print_title "Test assert_true()"
+
+assert_true \
+    true \
+    "true command succeeds"
+
+echo
+
+echo "Test 2 : commande qui échoue"
+
+if ! expect_failure \
+    assert_true \
+    false \
+    "false command should fail"
+then
+    print_ok "Expected failure"
+fi
+
+###############################################################################
+# assert_false()
+###############################################################################
+
+echo
+print_title "Test assert_false()"
+
+assert_false \
+    false \
+    "false command fails"
+
+echo
+
+echo "Test 2 : commande qui réussit"
+
+if ! expect_failure \
+    assert_false \
+    true \
+    "true command should fail assert_false"
+then
+    print_ok "Expected failure"
+fi
+
+###############################################################################
 # Résumé
 ###############################################################################
 

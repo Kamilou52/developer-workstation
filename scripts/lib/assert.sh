@@ -78,31 +78,37 @@ _file_contains() {
 
 }
 
+_command_succeeds() {
+
+    "$@"
+
+}
+
+_command_fails() {
+
+    "$@"
+
+}
+
 _assert_result() {
 
     local status="$1"
     local message="${2:-Assertion}"
+
+    if [[ "${ASSERT_SILENT:-0}" == "1" ]]
+    then
+        return "$status"
+    fi
 
     increment_total
 
     if (( status == 0 ))
     then
         increment_passed
-
-        if (( ASSERT_SILENT == 0 ))
-        then
-            print_ok "$message"
-        fi
-
+        print_ok "$message"
     else
-
         increment_failed
-
-        if (( ASSERT_SILENT == 0 ))
-        then
-            print_error "$message"
-        fi
-
+        print_error "$message"
     fi
 
     return "$status"
@@ -197,16 +203,18 @@ assert_equals() {
 
 assert_true() {
 
-    local command="$1"
     local message="${2:-Assertion}"
 
-    if "$command"
+    if _command_succeeds "$1"
     then
         _assert_result 0 "$message"
         return 0
     fi
 
     _assert_result 1 "$message"
+
+    _assert_failure_details \
+        "Command returned failure"
 
     return 1
 
@@ -217,15 +225,16 @@ assert_false() {
     local command="$1"
     local message="${2:-Assertion}"
 
-    if ! "$command"
+    if _command_fails "$command"
     then
-        _assert_result 0 "$message"
-        return 0
+        _assert_result 1 "$message"
+        _assert_failure_details \
+            "Command unexpectedly succeeded"
+        return 1
     fi
 
-    _assert_result 1 "$message"
-
-    return 1
+    _assert_result 0 "$message"
+    return 0
 
 }
 
