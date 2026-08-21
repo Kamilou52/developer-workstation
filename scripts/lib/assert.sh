@@ -347,7 +347,7 @@ assert_command_success() {
         message="Command succeeded"
     fi
 
-    if "$@"
+    if _command_succeeds "$@"
     then
         _assert_result 0 "$message"
         return 0

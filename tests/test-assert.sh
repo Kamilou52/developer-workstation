@@ -166,6 +166,26 @@ then
 fi
 
 ###############################################################################
+# assert_command_success()
+###############################################################################
+
+echo
+print_title "Test assert_command_success()"
+
+assert_command_success \
+    true \
+    "true command succeeds"
+
+echo
+
+echo "Test 2 : commande qui échoue"
+
+expect_failure \
+    assert_command_success \
+    false \
+    "false command should fail"
+
+###############################################################################
 # Résumé
 ###############################################################################
 
