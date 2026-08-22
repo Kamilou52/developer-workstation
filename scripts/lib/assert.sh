@@ -373,10 +373,11 @@ assert_command_failure() {
         message="Command failed"
     fi
 
-    if ! "$@"
+    if ! _command_fails "$@"
     then
         _assert_result 0 "$message"
         return 0
+
     fi
 
     _assert_result 1 "$message"
@@ -446,7 +447,7 @@ expect_failure() {
 #}
 
 ###############################################################################
-# Text assertions 
+# Text assertions
 ###############################################################################
 
 assert_contains() {

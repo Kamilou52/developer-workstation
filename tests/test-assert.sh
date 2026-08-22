@@ -186,6 +186,26 @@ expect_failure \
     "false command should fail"
 
 ###############################################################################
+# assert_command_failure()
+###############################################################################
+
+echo
+print_title "Test assert_command_failure()"
+
+assert_command_failure \
+    false \
+    "false command fails"
+
+echo
+
+echo "Test 2 : commande qui réussit"
+
+expect_failure \
+    assert_command_failure \
+    true \
+    "true command should fail"
+
+###############################################################################
 # Résumé
 ###############################################################################
 
