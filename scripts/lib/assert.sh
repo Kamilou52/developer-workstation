@@ -400,10 +400,12 @@ expect_failure() {
 
     ASSERT_SILENT=1
 
-    set +e
-    "$@"
-    status=$?
-    set -e
+    if _command_fails "$@"
+    then
+        status=0
+    else
+        status=$?
+    fi
 
     ASSERT_SILENT="$previous_silent"
 
@@ -412,8 +414,6 @@ expect_failure() {
         _assert_result 0 "Expected failure"
         return 0
     fi
-
-    _assert_result 1 "Expected failure"
 
     _assert_result 1 "Expected failure"
 
