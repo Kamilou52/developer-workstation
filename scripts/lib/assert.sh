@@ -445,30 +445,6 @@ expect_failure() {
 #    return 0
 #
 #}
-
 ###############################################################################
 # Text assertions
 ###############################################################################
-
-assert_contains() {
-
-    local expected="$1"
-    local actual="$2"
-    local message="${3:-Assertion}"
-
-    if [[ "$actual" == *"$expected"* ]]
-    then
-        _assert_result 0 "$message"
-        return 0
-    fi
-
-    _assert_result 1 "$message"
-
-    _assert_failure_details \
-    "Expected : $expected" \
-    "Actual   : $actual"
-
-    return 1
-
-}
-
