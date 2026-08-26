@@ -423,28 +423,6 @@ expect_failure() {
 
 }
 
-# expect_failure() {
-#
-#    local message="${*: -1}"
-#
-#    if (( $# > 1 ))
-#    then
-#        set -- "${@:1:$(($#-1))}"
-#    else
-#        message="Expected failure"
-#    fi
-#
-#    if "$@"
-#    then
-#        _assert_result 1 "$message"
-#        echo "Command unexpectedly succeeded : $*"
-#        return 1
-#    fi
-#
-#    _assert_result 0 "$message"
-#    return 0
-#
-#}
 ###############################################################################
 # Text assertions
 ###############################################################################
