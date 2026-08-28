@@ -38,6 +38,28 @@ assert_true \
     check_repository \
     "Inside Git repository"
 
+print_title "Git diagnostic functions"
+
+assert_true \
+    check_current_branch \
+    "Current branch check"
+
+assert_true \
+    check_remote \
+    "Remote check"
+
+assert_true \
+    check_working_tree \
+    "Working tree check"
+
+assert_true \
+    check_last_commit \
+    "Last commit check"
+
+assert_true \
+    check_upstream \
+    "Upstream check"
+
 assert_command_success \
     git rev-parse --is-inside-work-tree \
     "Git repository detected"
