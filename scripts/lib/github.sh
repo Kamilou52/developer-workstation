@@ -15,12 +15,14 @@ check_github_auth() {
 
 check_github_ssh() {
 
-    if ssh -T git@github.com >/dev/null 2>&1
+    local output
+
+    output=$(ssh -T git@github.com 2>&1 || true)
+
+    if [[ "$output" == *"successfully authenticated"* ]]
     then
         print_ok "GitHub SSH authentication"
     else
         print_warn "GitHub SSH authentication failed"
     fi
-
 }
-
