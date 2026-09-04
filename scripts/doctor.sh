@@ -46,7 +46,7 @@ check_command gh "GitHub CLI"
 
 print_title "SSH"
 
-ssh -T git@github.com
+check_github_ssh
 
 echo "========================================="
 echo "Developer Workstation Doctor"

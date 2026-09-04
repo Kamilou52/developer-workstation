@@ -8,3 +8,6 @@ scratch/
 tests/dev/*
 !tests/dev/.gitkeep
 sandbox/
+
+# Runtime logs
+logs/*.log
